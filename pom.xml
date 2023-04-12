@@ -10,14 +10,18 @@
     <description>project-description</description>
     <properties>
         <!-- java -->
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <!-- build tool -->
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <!-- testing -->
+        <junit.version>5.9.2</junit.version>
+        <assertj.version>3.24.2</assertj.version> <!-- used as assertion library -->
+        <archunit.version>1.0.1</archunit.version>  <!-- used to enforce architectural decisions -->
+        <pitest-maven.version>1.11.0</pitest-maven.version> <!-- used to do mutation testing -->
+        <pitest-junit5-plugin.version>1.1.2</pitest-junit5-plugin.version> <!-- used to enable pitest to use junit 5 -->
+        <mockito-core.version>5.3.1</mockito-core.version> <!-- used as mocking library -->
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-        <junit.version>5.6.2</junit.version>
-        <assertj.version>3.20.2</assertj.version>
     </properties>
     <dependencies>
         <!-- testing -->
@@ -43,6 +47,24 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tngtech.archunit</groupId>
+            <artifactId>archunit</artifactId>
+            <version>${archunit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito-core.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -84,20 +106,20 @@
                     <plugin>
                         <groupId>org.pitest</groupId>
                         <artifactId>pitest-maven</artifactId>
-                        <version>1.11.0</version>
+                        <version>${pitest-maven.version}</version>
                         <configuration>
                             <targetClasses>
-                                <param>hwr.oop*</param>
+                                <param>hwr.oop.poker*</param>
                             </targetClasses>
                             <targetTests>
-                                <param>hwr.oop*</param>
+                                <param>hwr.oop.poker*</param>
                             </targetTests>
                         </configuration>
                         <dependencies>
                             <dependency>
                                 <groupId>org.pitest</groupId>
                                 <artifactId>pitest-junit5-plugin</artifactId>
-                                <version>1.1.2</version>
+                                <version>${pitest-junit5-plugin.version}</version>
                             </dependency>
                         </dependencies>
                     </plugin>
