@@ -1,9 +1,10 @@
 package hwr.oop.examples.polymorphism.subtyp;
 
 public interface Shape {
-    double getPerimeterLength();
 
-    double getAreaSize();
+  double getPerimeterLength();
 
-    int getNumberOfSides();
+  double getAreaSize();
+
+  int getNumberOfSides();
 }

@@ -7,23 +7,23 @@ import hwr.oop.poker.application.ports.out.LoadHandPort;
 
 public class CsvFilePersistenceAdapter implements LoadHandPort {
 
-    private final Configuration configuration;
+  private final Configuration configuration;
 
-    public CsvFilePersistenceAdapter(Configuration configuration) {
-        this.configuration = configuration;
-    }
+  public CsvFilePersistenceAdapter(Configuration configuration) {
+    this.configuration = configuration;
+  }
 
-    public static Configuration.Builder newConfigBuilder() {
-        return new Configuration.Builder();
-    }
+  public static Configuration.Builder newConfigBuilder() {
+    return new Configuration.Builder();
+  }
 
-    @Override
-    public Hand loadById(HandId id) {
-        if (id.value().equals("1337")) {
-            return null;
-        } else {
-            throw new CouldNotLoadHandException("idString is not available: " + id);
-        }
+  @Override
+  public Hand loadById(HandId id) {
+    if (id.value().equals("1337")) {
+      return null;
+    } else {
+      throw new CouldNotLoadHandException("idString is not available: " + id);
     }
+  }
 
 }

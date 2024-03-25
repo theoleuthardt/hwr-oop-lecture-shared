@@ -4,5 +4,6 @@ import hwr.oop.poker.application.domain.Hand;
 import hwr.oop.poker.application.domain.HandId;
 
 public interface LoadHandPort {
-    Hand loadById(HandId id);
+
+  Hand loadById(HandId id);
 }

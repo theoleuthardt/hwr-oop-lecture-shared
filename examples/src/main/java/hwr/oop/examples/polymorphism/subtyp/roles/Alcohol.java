@@ -5,37 +5,38 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Alcohol {
-    private final int amount;
 
-    public Alcohol(int amount) {
-        this.amount = amount;
-    }
+  private final int amount;
 
-    public static Alcohol aLot() {
-        return new Alcohol(133337);
-    }
+  public Alcohol(int amount) {
+    this.amount = amount;
+  }
 
-    public static Alcohol none() {
-        return Alcohol.of(0);
-    }
+  public static Alcohol aLot() {
+    return new Alcohol(133337);
+  }
 
-    private static Alcohol of(int amount) {
-        return new Alcohol(amount);
-    }
+  public static Alcohol none() {
+    return Alcohol.of(0);
+  }
 
-    public void ifOver9000(Runnable runnable) {
-        if (amount > 9000) {
-            runnable.run();
-        }
-    }
+  private static Alcohol of(int amount) {
+    return new Alcohol(amount);
+  }
 
-    public <E> Map<E, Alcohol> splitFor(Collection<E> consumers) {
-        Alcohol alcPerPartyGuest = Alcohol.of(amount / consumers.size());
-        return consumers.stream()
-                .collect(Collectors.toMap(w -> w, w -> alcPerPartyGuest));
+  public void ifOver9000(Runnable runnable) {
+    if (amount > 9000) {
+      runnable.run();
     }
+  }
 
-    public int amount() {
-        return amount;
-    }
+  public <E> Map<E, Alcohol> splitFor(Collection<E> consumers) {
+    Alcohol alcPerPartyGuest = Alcohol.of(amount / consumers.size());
+    return consumers.stream()
+        .collect(Collectors.toMap(w -> w, w -> alcPerPartyGuest));
+  }
+
+  public int amount() {
+    return amount;
+  }
 }

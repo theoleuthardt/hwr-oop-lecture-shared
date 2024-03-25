@@ -1,24 +1,25 @@
 package hwr.oop.examples.classes.comparability;
 
 class Train implements Comparable<Train> {
-    private final int numberOfRailCars;
-    private int speed;
 
-    public Train(int numberOfRailCars) {
-        this.numberOfRailCars = numberOfRailCars;
-        this.speed = 0;
-    }
+  private final int numberOfRailCars;
+  private int speed;
 
-    @Override
-    public int compareTo(Train o) {
-        return Integer.compare(this.speed, o.speed);
-    }
+  public Train(int numberOfRailCars) {
+    this.numberOfRailCars = numberOfRailCars;
+    this.speed = 0;
+  }
 
-    void accelerateTo(int speed) {
-        this.speed = speed;
-    }
+  @Override
+  public int compareTo(Train o) {
+    return Integer.compare(this.speed, o.speed);
+  }
 
-    int getRailCars() {
-        return numberOfRailCars;
-    }
+  void accelerateTo(int speed) {
+    this.speed = speed;
+  }
+
+  int getRailCars() {
+    return numberOfRailCars;
+  }
 }

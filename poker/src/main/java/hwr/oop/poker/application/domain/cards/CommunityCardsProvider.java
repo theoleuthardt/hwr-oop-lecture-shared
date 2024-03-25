@@ -1,17 +1,16 @@
 package hwr.oop.poker.application.domain.cards;
 
 import hwr.oop.poker.application.domain.Card;
-
 import java.util.Collection;
 import java.util.Optional;
 
 public interface CommunityCardsProvider {
 
-    Collection<Card> cardsDealt();
+  Collection<Card> cardsDealt();
 
-    Optional<Flop> flop();
+  Optional<Flop> flop();
 
-    Optional<Turn> turn();
+  Optional<Turn> turn();
 
-    Optional<River> river();
+  Optional<River> river();
 }
