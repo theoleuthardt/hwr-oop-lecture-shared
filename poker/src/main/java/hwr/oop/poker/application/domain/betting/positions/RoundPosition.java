@@ -4,6 +4,7 @@ package hwr.oop.poker.application.domain.betting.positions;
 import hwr.oop.poker.application.domain.Deck;
 import hwr.oop.poker.application.domain.cards.CommunityCardsProvider;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public interface RoundPosition {
 
@@ -11,6 +12,10 @@ public interface RoundPosition {
   RoundPosition FLOP = new Flop();
   RoundPosition TURN = new Turn();
   RoundPosition RIVER = new River();
+
+  static Stream<RoundPosition> all() {
+    return Stream.of(PRE_FLOP, FLOP, TURN, RIVER);
+  }
 
   int position();
 
@@ -35,4 +40,5 @@ public interface RoundPosition {
       return other;
     }
   }
+
 }

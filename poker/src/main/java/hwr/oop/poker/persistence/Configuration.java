@@ -1,23 +1,24 @@
 package hwr.oop.poker.persistence;
 
-public record Configuration(String directory) {
-  // nothing else to do here!
+import java.nio.file.Path;
+
+public record Configuration(Path csvFilePath) {
 
   public static class Builder {
 
-    private String directory;
+    private Path csvFilePath;
 
     Builder() {
-      this.directory = null;
-    }
-
-    public Builder directory(String directory) {
-      this.directory = directory;
-      return this;
+      this.csvFilePath = null;
     }
 
     public Configuration build() {
-      return new Configuration(directory);
+      return new Configuration(csvFilePath);
+    }
+
+    public Builder csvFile(Path path) {
+      this.csvFilePath = path;
+      return this;
     }
   }
 }

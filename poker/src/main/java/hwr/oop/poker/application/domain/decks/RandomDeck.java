@@ -23,6 +23,10 @@ public class RandomDeck implements Deck {
     Collections.shuffle(cards);
   }
 
+  private RandomDeck(List<Card> cards) {
+    this.cards = new ArrayList<>(cards);
+  }
+
   @Override
   public boolean isEmpty() {
     return cards.isEmpty();
@@ -33,7 +37,7 @@ public class RandomDeck implements Deck {
     if (isEmpty()) {
       throw new DrawFromEmptyDeckException("Cannot peek at top Card if Deck is empty");
     }
-    return cards.get(0);
+    return cards.getFirst();
   }
 
   @Override
@@ -41,6 +45,11 @@ public class RandomDeck implements Deck {
     if (isEmpty()) {
       throw new DrawFromEmptyDeckException("Cannot burn card if Deck is empty");
     }
-    cards.remove(0);
+    cards.removeFirst();
+  }
+
+  @Override
+  public Deck copy() {
+    return new RandomDeck(cards);
   }
 }

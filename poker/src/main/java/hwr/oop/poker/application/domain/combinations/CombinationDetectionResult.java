@@ -33,7 +33,7 @@ final class CombinationDetectionResult {
 
   public List<Card> winner() {
     if (successful()) {
-      return candidates.get(0);
+      return candidates.getFirst();
     } else {
       throw new IllegalStateException("Cannot retrieve Cards from unsuccessful show down matching");
     }

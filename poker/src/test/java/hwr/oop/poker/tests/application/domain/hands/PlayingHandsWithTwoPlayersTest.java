@@ -1,7 +1,6 @@
-package hwr.oop.poker.tests.domain.hands;
+package hwr.oop.poker.tests.application.domain.hands;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import hwr.oop.poker.application.domain.Card;
 import hwr.oop.poker.application.domain.Color;
@@ -23,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -54,9 +52,9 @@ class PlayingHandsWithTwoPlayersTest {
         cardsOnFlop.get(1),
         cardsOnFlop.get(2),
         new Card(Color.SPADES, Symbol.THREE),  // burned, turn following
-        cardsOnTurn.get(0),
+        cardsOnTurn.getFirst(),
         new Card(Color.DIAMONDS, Symbol.THREE),  // burned, river following
-        cardsOnRiver.get(0)
+        cardsOnRiver.getFirst()
     );
     firstPlayer = new Player("1");
     secondPlayer = new Player("2");
@@ -120,12 +118,6 @@ class PlayingHandsWithTwoPlayersTest {
     assertThat(underTheGun).isSameAs(firstPlayer);
   }
 
-  @Test
-  @Disabled("Messages asking whether players have position on each other is not yet implemented")
-  void positionalRelationsBetweenPlayers() {
-    fail("Not yet implemented");
-  }
-
   @Nested
   @DisplayName("has blinds: Small blind is 42, Big Blind is 84")
   class BlindTest {
@@ -153,11 +145,6 @@ class PlayingHandsWithTwoPlayersTest {
           .isEqualTo(actualSmallBlindValue);
     }
 
-    @Test
-    @Disabled("Antes (mandatory costs for all players not paying blinds) are not yet supported")
-    void antes() {
-      fail("Not yet implemented");
-    }
   }
 
   @Nested
@@ -502,22 +489,5 @@ class PlayingHandsWithTwoPlayersTest {
     assertThat(potSize).isEqualTo(sbValue + bbValue);
   }
 
-  @Test
-  @Disabled("Bet & Call, pot size increases not yet implemented")
-  void betCall_AllOtherRoundsCheck_BetSizeTimesTwoPlusBlinds() {
-    fail("Bet & Call, pot size increases not yet implemented");
-  }
-
-  @Test
-  @Disabled("All In & Call, pot size is twice the smallest stack, not yet implemented")
-  void allInCall_NoMoreRoundsToPlay_PotSizeIsTwoTimesSmallestStack() {
-    fail("All In & Call, pot size is twice the smallest stack, not yet implemented");
-  }
-
-  @Test
-  @Disabled("Message asking for the current player on action is not yet implemented")
-  void turn_IsOnUnderTheGun() {
-    fail("Not yet implemented");
-  }
 
 }

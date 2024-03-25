@@ -18,6 +18,16 @@
     <!-- build tool -->
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
+    <!-- dependencies -->
+    <jcommander.version>1.83</jcommander.version>
   </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jcommander</groupId>
+      <artifactId>jcommander</artifactId>
+      <version>${jcommander.version}</version>
+    </dependency>
+  </dependencies>
 
 </project>

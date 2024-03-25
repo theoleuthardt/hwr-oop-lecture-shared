@@ -30,7 +30,7 @@ public class BettingRound {
     this.players = players;
     this.stacks = stacks;
     this.plays = new ArrayList<>();
-    this.turn = players.get(0);
+    this.turn = players.getFirst();
   }
 
   private BettingRound(Stacks stacks, List<Player> players, Stream<Play> plays, Player turn) {
@@ -100,7 +100,7 @@ public class BettingRound {
     if (plays.isEmpty()) {
       return Optional.empty();
     } else {
-      final Play lastPlay = plays.get(plays.size() - 1);
+      final Play lastPlay = plays.getLast();
       return Optional.of(lastPlay);
     }
   }
@@ -218,6 +218,10 @@ public class BettingRound {
 
   private boolean hasPlayerNotFolded(Player player) {
     return plays.stream().noneMatch(play -> play.playedBy(player) && play.isFold());
+  }
+
+  public Stream<Play> plays() {
+    return plays.stream();
   }
 
   public static class InvalidPlayOnStateException extends RuntimeException {

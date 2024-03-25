@@ -13,14 +13,8 @@ public class Flop implements Card.Provider {
   }
 
   private Flop(List<Card> cards) {
-    assertValidFlop(cards);
+    assert cards != null && cards.size() == 3;
     this.cards = cards;
-  }
-
-  private void assertValidFlop(List<Card> cards) {
-    if (cards == null || cards.size() != 3) {
-      throw new InvalidFlopException(cards);
-    }
   }
 
   @Override
@@ -33,10 +27,4 @@ public class Flop implements Card.Provider {
     return "Flop{" + cards + '}';
   }
 
-  private static class InvalidFlopException extends RuntimeException {
-
-    public InvalidFlopException(List<Card> cards) {
-      super("Cannot create flop, requires 3 cards, got: " + cards);
-    }
-  }
 }

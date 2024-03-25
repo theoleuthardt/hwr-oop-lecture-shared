@@ -67,7 +67,7 @@ final class StraightMatchingStrategy implements CombinationDetectionStrategy {
           .filter(c -> c.color().equals(mostCommonColor))
           .findFirst().orElseThrow();
     } else {
-      return list.get(0);
+      return list.getFirst();
     }
   }
 

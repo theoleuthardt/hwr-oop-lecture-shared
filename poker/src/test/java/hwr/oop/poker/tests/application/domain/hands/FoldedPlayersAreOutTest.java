@@ -1,4 +1,4 @@
-package hwr.oop.poker.tests.domain.hands;
+package hwr.oop.poker.tests.application.domain.hands;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

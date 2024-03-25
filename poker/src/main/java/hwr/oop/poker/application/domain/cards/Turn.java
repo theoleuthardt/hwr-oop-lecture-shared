@@ -12,14 +12,8 @@ public class Turn implements Card.Provider {
   }
 
   private Turn(Card card) {
-    assertValidTurn(card);
+    assert card != null;
     this.card = card;
-  }
-
-  private void assertValidTurn(Card card) {
-    if (card == null) {
-      throw new InvalidTurnException();
-    }
   }
 
   @Override
@@ -32,10 +26,4 @@ public class Turn implements Card.Provider {
     return "Turn{" + card + '}';
   }
 
-  private static class InvalidTurnException extends RuntimeException {
-
-    public InvalidTurnException() {
-      super("Cannot create turn, requires card not to be null, but it was");
-    }
-  }
 }

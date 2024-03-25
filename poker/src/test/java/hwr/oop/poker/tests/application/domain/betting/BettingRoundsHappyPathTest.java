@@ -1,4 +1,4 @@
-package hwr.oop.poker.tests.domain.betting;
+package hwr.oop.poker.tests.application.domain.betting;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

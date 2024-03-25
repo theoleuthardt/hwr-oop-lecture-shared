@@ -1,6 +1,5 @@
 package hwr.oop.poker.application.domain;
 
-import java.util.Arrays;
 import java.util.Comparator;
 
 public enum Symbol {
@@ -27,12 +26,6 @@ public enum Symbol {
   Symbol(String stringRepresentation, int strength) {
     this.stringRepresentation = stringRepresentation;
     this.strength = strength;
-  }
-
-  public static Symbol of(int strength) {
-    return Arrays.stream(Symbol.values())
-        .filter(s -> s.strength() == strength)
-        .findFirst().orElseThrow();
   }
 
   public String stringRepresentation() {

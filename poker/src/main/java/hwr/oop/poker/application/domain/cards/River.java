@@ -12,14 +12,8 @@ public class River implements Card.Provider {
   }
 
   private River(Card card) {
-    assertValidRiver(card);
+    assert card != null;
     this.card = card;
-  }
-
-  private void assertValidRiver(Card card) {
-    if (card == null) {
-      throw new InvalidRiverException();
-    }
   }
 
   @Override
@@ -32,10 +26,4 @@ public class River implements Card.Provider {
     return "River{" + card + '}';
   }
 
-  private static class InvalidRiverException extends RuntimeException {
-
-    public InvalidRiverException() {
-      super("Cannot create river, requires card not to be null, but it was");
-    }
-  }
 }

@@ -2,8 +2,6 @@ package hwr.oop.poker.application.domain;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class Converter {
 
@@ -16,9 +14,8 @@ public class Converter {
   }
 
   public Card from(String singleCardString) {
-    assertValidLength(singleCardString);
-    final String symbolString = singleCardString.substring(0, 1);
-    final String colorString = singleCardString.substring(1, 2);
+    final var symbolString = singleCardString.substring(0, 1);
+    final var colorString = singleCardString.substring(1, 2);
     return new Card(
         parseColor(colorString),
         parseSymbol(symbolString)
@@ -26,7 +23,7 @@ public class Converter {
   }
 
   private Symbol parseSymbol(String symbolString) {
-    final Optional<Symbol> element = Arrays.stream(Symbol.values())
+    final var element = Arrays.stream(Symbol.values())
         .filter(s -> s.stringRepresentation().equals(symbolString))
         .findFirst();
     if (element.isEmpty()) {
@@ -39,7 +36,7 @@ public class Converter {
   }
 
   private Color parseColor(String colorString) {
-    final Optional<Color> element = Arrays.stream(Color.values())
+    final var element = Arrays.stream(Color.values())
         .filter(s -> s.stringRepresentation().equals(colorString))
         .findFirst();
     if (element.isEmpty()) {
@@ -50,17 +47,9 @@ public class Converter {
     }
   }
 
-  private void assertValidLength(String singleCardString) {
-    if (singleCardString.length() > 2) {
-      throw new IllegalArgumentException(
-          "Can not create card from string, expected: [23456789TJQKA][HDSC], actual: "
-              + singleCardString);
-    }
-  }
-
   public List<Card> convert(String cards) {
     return Arrays.stream(cards.split(","))
         .map(this::from)
-        .collect(Collectors.toList());
+        .toList();
   }
 }

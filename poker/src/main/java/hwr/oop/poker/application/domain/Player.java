@@ -31,4 +31,8 @@ public class Player {
   public String toString() {
     return "Player " + identifier;
   }
+
+  public String id() {
+    return identifier;
+  }
 }

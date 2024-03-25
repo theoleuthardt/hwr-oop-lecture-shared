@@ -72,6 +72,23 @@ public class CommunityCards implements CommunityCardsProvider {
     return Optional.ofNullable(river);
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    CommunityCards that = (CommunityCards) o;
+    return Objects.equals(flop, that.flop) && Objects.equals(turn, that.turn)
+        && Objects.equals(river, that.river);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(flop, turn, river);
+  }
 
   public static class CommunityCardBuilder {
 
@@ -79,17 +96,8 @@ public class CommunityCards implements CommunityCardsProvider {
     private Turn turn;
 
     CommunityCardBuilder(Flop flop) {
-      assertFlopIsValid(flop);
+      assert flop != null;
       this.flop = flop;
-    }
-
-    private static void assertFlopIsValid(Flop flop) {
-      if (flop == null) {
-        throw new CannotCreateCommunityCardsException(
-            "Cannot build community cards with the flop being null." +
-                " If you want to create an empty Board of community cards, use CommunityCards.empty()"
-        );
-      }
     }
 
     public CommunityCardBuilder turn(Card card) {
@@ -113,13 +121,6 @@ public class CommunityCards implements CommunityCardsProvider {
     public CommunityCardsProvider river(Card card) {
       final River river = River.of(card);
       return new CommunityCards(flop, turn, river);
-    }
-  }
-
-  private static class CannotCreateCommunityCardsException extends RuntimeException {
-
-    public CannotCreateCommunityCardsException(String message) {
-      super(message);
     }
   }
 

@@ -1,6 +1,7 @@
 package hwr.oop.poker.application.domain;
 
 import hwr.oop.poker.application.domain.betting.BettingRound;
+import hwr.oop.poker.application.domain.betting.Play;
 import hwr.oop.poker.application.domain.betting.positions.RoundPosition;
 import hwr.oop.poker.application.domain.blinds.BlindConfiguration;
 import hwr.oop.poker.application.domain.cards.CommunityCards;
@@ -26,6 +27,7 @@ public class Hand implements CommunityCardsProvider {
   private final HoleCards holeCards;
   private final Map<RoundPosition, BettingRound> rounds;
   private final CommunityCardsProvider communityCards;
+  private final HandMemento memento;
 
   public static Builder newBuilder() {
     return new Builder();
@@ -41,12 +43,14 @@ public class Hand implements CommunityCardsProvider {
       BlindConfiguration blindConfiguration,
       HoleCards holeCards,
       Map<RoundPosition, BettingRound> rounds,
-      CommunityCardsProvider communityCards) {
-    return new Hand(deck, players, blindConfiguration, holeCards, rounds, communityCards);
+      CommunityCardsProvider communityCards,
+      HandMemento memento) {
+    return new Hand(deck, players, blindConfiguration, holeCards, rounds, communityCards, memento);
   }
 
   private Hand(Deck deck, List<Player> players, BlindConfiguration blindConfiguration,
       Stacks stacks) {
+    this.memento = new HandMemento(deck.copy(), players, blindConfiguration, stacks);
     this.deck = deck;
     this.players = players;
     this.blindConfiguration = blindConfiguration;
@@ -56,18 +60,22 @@ public class Hand implements CommunityCardsProvider {
     this.rounds = Map.of(RoundPosition.PRE_FLOP, preFlopRound);
   }
 
-  private Hand(Deck deck,
+  private Hand(
+      Deck deck,
       List<Player> players,
       BlindConfiguration blindConfiguration,
       HoleCards holeCards,
       Map<RoundPosition, BettingRound> rounds,
-      CommunityCardsProvider communityCards) {
+      CommunityCardsProvider communityCards,
+      HandMemento memento
+  ) {
     this.deck = deck;
     this.players = players;
     this.blindConfiguration = blindConfiguration;
     this.holeCards = holeCards;
     this.rounds = createMapBasedOn(rounds);
     this.communityCards = buildCommunityCards(deck, communityCards);
+    this.memento = memento;
   }
 
   private CommunityCardsProvider buildCommunityCards(Deck deck,
@@ -87,7 +95,7 @@ public class Hand implements CommunityCardsProvider {
   }
 
   public Player smallBlind() {
-    return players.get(0);
+    return players.getFirst();
   }
 
   public Player bigBlind() {
@@ -99,7 +107,7 @@ public class Hand implements CommunityCardsProvider {
   }
 
   public Player underTheGun() {
-    return players.get(0);
+    return players.getFirst();
   }
 
   public BlindConfiguration blindConfiguration() {
@@ -199,6 +207,7 @@ public class Hand implements CommunityCardsProvider {
         .blindConfiguration(blindConfiguration)
         .holeCards(holeCards)
         .rounds(rounds)
+        .memento(memento)
         .communityCards(communityCards);
   }
 
@@ -285,12 +294,18 @@ public class Hand implements CommunityCardsProvider {
 
   public List<Player> remainingPlayers() {
     final var position = currentPosition();
-    if (rounds.containsKey(position)) {
-      final BettingRound currentRound = rounds.get(position);
-      return currentRound.remainingPlayers();
-    } else {
-      throw new IllegalStateException("No round available for current position: " + position);
-    }
+    assert rounds.containsKey(position);
+    final BettingRound currentRound = rounds.get(position);
+    return currentRound.remainingPlayers();
+  }
+
+  public HandMemento restoreMemento() {
+    return memento;
+  }
+
+  public Stream<Play> plays() {
+    return RoundPosition.all()
+        .flatMap(p -> rounds.containsKey(p) ? rounds.get(p).plays() : Stream.empty());
   }
 
   public static class Builder {
@@ -302,6 +317,7 @@ public class Hand implements CommunityCardsProvider {
     private Map<RoundPosition, BettingRound> rounds;
     private CommunityCardsProvider communityCards;
     private Stacks stacks;
+    private HandMemento memento;
 
     private Builder() {
       this.deck = null;
@@ -311,16 +327,19 @@ public class Hand implements CommunityCardsProvider {
       this.communityCards = null;
       this.rounds = null;
       this.stacks = null;
+      this.memento = null;
     }
 
     public Hand build() {
-      final var hasIncompleteInfo = Stream.of(holeCards, rounds, communityCards)
+      final var hasIncompleteInfo = Stream.of(holeCards, rounds, communityCards, memento)
           .anyMatch(Objects::isNull);
       if (hasIncompleteInfo) {
         return Hand.createInitially(deck, players, blindConfiguration, stacks);
       } else {
-        return Hand.createBasedOnOlderHand(deck, players, blindConfiguration, holeCards, rounds,
-            communityCards);
+        return Hand.createBasedOnOlderHand(
+            deck, players, blindConfiguration, holeCards, rounds,
+            communityCards, memento
+        );
       }
     }
 
@@ -358,10 +377,42 @@ public class Hand implements CommunityCardsProvider {
       this.stacks = stacks;
       return this;
     }
+
+    public Builder memento(HandMemento memento) {
+      this.memento = memento;
+      return this;
+    }
   }
 
   public static class PlayOnOnFinishedHandException extends RuntimeException {
     // nothing to do
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Hand hand = (Hand) o;
+    return Objects.equals(players, hand.players) &&
+        Objects.equals(memento, hand.memento) &&
+        Objects.equals(plays().toList(), hand.plays().toList());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(players, memento, plays().toList());
+  }
+
+  @Override
+  public String toString() {
+    return "Hand{" +
+        "players=" + players +
+        ", memento=" + memento +
+        ", plays=" + plays().map(Play::toString).toList() +
+        '}';
+  }
 }

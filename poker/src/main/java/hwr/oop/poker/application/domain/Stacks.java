@@ -4,6 +4,7 @@ import hwr.oop.poker.application.domain.betting.Play;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class Stacks implements Function<Player, ChipValue> {
@@ -22,6 +23,32 @@ public class Stacks implements Function<Player, ChipValue> {
   @Override
   public ChipValue apply(Player player) {
     return ofPlayer(player);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Stacks stacks = (Stacks) o;
+    return Objects.equals(map, stacks.map);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(map);
+  }
+
+  @Override
+  public String toString() {
+    return "Stacks{" +
+        map.keySet().stream()
+            .map(k -> k.toString() + "=" + map.get(k).toString())
+            .reduce((a, b) -> a + ", " + b).orElseThrow() +
+        '}';
   }
 
   public ChipValue ofPlayer(Player player) {

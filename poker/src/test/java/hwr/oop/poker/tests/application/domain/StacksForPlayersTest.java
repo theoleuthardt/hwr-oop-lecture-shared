@@ -1,8 +1,7 @@
-package hwr.oop.poker.tests.domain;
+package hwr.oop.poker.tests.application.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import hwr.oop.poker.application.domain.ChipValue;
 import hwr.oop.poker.application.domain.Deck;
@@ -16,7 +15,6 @@ import hwr.oop.poker.application.domain.blinds.SmallBlind;
 import hwr.oop.poker.application.domain.decks.RandomDeck;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -126,23 +124,6 @@ class StacksForPlayersTest {
       // then
       final var remainingChips = roundAfterBet.remainingChips(firstPlayer);
       assertThat(remainingChips).isEqualTo(ChipValue.of(80));
-    }
-
-
-    @Test
-    @Disabled("Player 1 has more than Player 2, all in + call," +
-        " Player 1 has 0 chips left, Player 2 has some chips left not yet implemented")
-    void player1LessChipsThanPlayer2_AllInCalled_Player1HasNoChipsLeftWhilePlayer2StillHasSome() {
-      fail("Player 1 has more than Player 2, all in + call," +
-          " Player 1 has 0 chips left, Player 2 has some chips left not yet implemented");
-    }
-
-    @Test
-    @Disabled("Player 1 has more than Player 2, bet + all in + call," +
-        " both players have 0 chips left not yet implemented")
-    void player1LassChipsThanPlayer2_betAllInCalled_BothPlayersHaveNoChipsLeft() {
-      fail("Player 1 has more than Player 2, bet + all in + call," +
-          " both players have 0 chips left not yet implemented");
     }
 
   }

@@ -3,19 +3,8 @@ package hwr.oop.poker.application.domain.betting;
 import hwr.oop.poker.application.domain.ChipValue;
 import hwr.oop.poker.application.domain.Player;
 
-public class Play {
+public record Play(Player player, ChipValue chipsTotal, ChipValue chipsAdded, Type type) {
 
-  private final Player player;
-  private final ChipValue chipsTotal;
-  private final ChipValue chipsAdded;
-  private final Type type;
-
-  private Play(Player player, ChipValue chipsTotal, ChipValue chipsAdded, Type type) {
-    this.player = player;
-    this.chipsTotal = chipsTotal;
-    this.chipsAdded = chipsAdded;
-    this.type = type;
-  }
 
   public static Play fold(Player player) {
     return new Play(player, ChipValue.zero(), ChipValue.zero(), Type.FOLD);
@@ -49,16 +38,8 @@ public class Play {
     return this.player.equals(player);
   }
 
-  public Player player() {
-    return player;
-  }
-
   public ChipValue chipValue() {
     return chipsAdded;
-  }
-
-  public Type type() {
-    return type;
   }
 
   public boolean increasedChipsInPot() {
@@ -101,8 +82,13 @@ public class Play {
   }
 
   public enum Type {
-    BET(true, true), FOLD(false, false), RAISE(true, true), CHECK(false, false), CALL(true,
-        false), SMALL_BLIND(true, true), BIG_BLIND(true, true);
+    BET(true, true),
+    FOLD(false, false),
+    RAISE(true, true),
+    CHECK(false, false),
+    CALL(true, false),
+    SMALL_BLIND(true, true),
+    BIG_BLIND(true, true);
 
     private final boolean increasedChips;
     private final boolean isRaise;

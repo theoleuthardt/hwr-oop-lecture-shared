@@ -1,11 +1,9 @@
-package hwr.oop.poker.tests.domain;
+package hwr.oop.poker.tests.application.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import hwr.oop.poker.application.domain.ChipValue;
 import hwr.oop.poker.application.domain.blinds.SmallBlind;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,9 +35,4 @@ class ChipValuesTest {
     assertThat(valuedBigBlind).isGreaterThan(smallBlind);
   }
 
-  @Test
-  @Disabled("Chip values outside of blinds are not yet implemented")
-  void trueStacksIndependentOfBlindsAndAntes() {
-    Assertions.fail("Not yet implemented");
-  }
 }

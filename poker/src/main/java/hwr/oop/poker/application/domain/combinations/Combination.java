@@ -2,7 +2,6 @@ package hwr.oop.poker.application.domain.combinations;
 
 import hwr.oop.poker.application.domain.Card;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 public final class Combination implements Comparable<Combination> {
@@ -83,23 +82,6 @@ public final class Combination implements Comparable<Combination> {
       }
     }
     return 0;
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Combination that = (Combination) o;
-    return Objects.equals(cards(), that.cards()) && label == that.label;
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(nonKickers, label);
   }
 
   public enum Label {

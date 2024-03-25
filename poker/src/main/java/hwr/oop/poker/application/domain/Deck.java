@@ -29,6 +29,8 @@ public interface Deck {
     return cards;
   }
 
+  Deck copy();
+
   class DrawFromEmptyDeckException extends RuntimeException {
 
     public DrawFromEmptyDeckException(String message) {
