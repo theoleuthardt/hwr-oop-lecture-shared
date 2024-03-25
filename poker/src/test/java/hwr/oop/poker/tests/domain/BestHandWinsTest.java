@@ -1,8 +1,8 @@
 package hwr.oop.poker.tests.domain;
 
 import hwr.oop.poker.application.domain.Card;
-import hwr.oop.poker.application.domain.combinations.Combination;
 import hwr.oop.poker.application.domain.Converter;
+import hwr.oop.poker.application.domain.combinations.Combination;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
