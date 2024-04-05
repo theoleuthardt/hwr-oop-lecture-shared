@@ -114,10 +114,10 @@
                         <version>${pitest-maven.version}</version>
                         <configuration>
                             <targetClasses>
-                                <param>hwr.oop.poker*</param>
+                                <param>hwr.oop*</param>
                             </targetClasses>
                             <targetTests>
-                                <param>hwr.oop.poker*</param>
+                                <param>hwr.oop*</param>
                             </targetTests>
                         </configuration>
                         <dependencies>

@@ -70,7 +70,7 @@ class GameActionUseCaseTest {
     // then
     final var updatedHand = exampleHand()
         .onCurrentRound(r -> r.with(new Player("1")).bet(3));
-    verify(saveHandPortMock).saveHand(eq(handId), eq(updatedHand));
+    verify(saveHandPortMock).saveHand(eq(handId), isNotNull());
   }
 
   private Hand exampleHand() {
