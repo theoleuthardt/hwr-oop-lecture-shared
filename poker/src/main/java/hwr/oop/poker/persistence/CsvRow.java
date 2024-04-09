@@ -10,7 +10,7 @@ import hwr.oop.poker.application.domain.betting.BettingRound;
 import hwr.oop.poker.application.domain.betting.Play.Type;
 import hwr.oop.poker.application.domain.blinds.BlindConfiguration;
 import hwr.oop.poker.application.domain.blinds.SmallBlind;
-import hwr.oop.poker.application.domain.decks.TestDoubleDeck;
+import hwr.oop.poker.application.domain.decks.UnshuffledDeck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -113,7 +113,7 @@ public record CsvRow(String idString, String playersAndStacks, String smallBlind
   private Deck parseDeck() {
     final var converter = Converter.create();
     final var cardsInDeck = converter.convert(deckString);
-    return new TestDoubleDeck(cardsInDeck);
+    return new UnshuffledDeck(cardsInDeck);
   }
 
   private Hand createHand(Stacks stacks, List<Player> players, Deck deck,

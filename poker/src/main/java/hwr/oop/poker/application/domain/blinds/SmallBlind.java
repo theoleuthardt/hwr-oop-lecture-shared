@@ -20,5 +20,20 @@ public record SmallBlind(long value, ChipValue bigBlind) implements ChipValue {
     this(value, ChipValue.of(value * 2));
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    SmallBlind that = (SmallBlind) o;
+    return value == that.value;
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(value);
+  }
 }

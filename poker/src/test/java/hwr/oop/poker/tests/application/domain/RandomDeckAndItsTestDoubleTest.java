@@ -8,7 +8,7 @@ import hwr.oop.poker.application.domain.Color;
 import hwr.oop.poker.application.domain.Deck;
 import hwr.oop.poker.application.domain.Symbol;
 import hwr.oop.poker.application.domain.decks.RandomDeck;
-import hwr.oop.poker.application.domain.decks.TestDoubleDeck;
+import hwr.oop.poker.application.domain.decks.UnshuffledDeck;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -67,7 +67,7 @@ class RandomDeckAndItsTestDoubleTest {
     @Test
     @DisplayName("only (H7,JS,AC) in deckString, exactly (H7,JS,AC) can be drawn")
     void testDouble_ThreeCards_ExactlyTheseCardsPresent() {
-      final Deck deck = new TestDoubleDeck(
+      final Deck deck = new UnshuffledDeck(
           new Card(Color.HEARTS, Symbol.SEVEN),
           new Card(Color.SPADES, Symbol.JACK),
           new Card(Color.CLUBS, Symbol.ACE)
@@ -83,7 +83,7 @@ class RandomDeckAndItsTestDoubleTest {
     @Test
     @DisplayName("only (H7,H8) in deckString, exactly (H7,H8) can be drawn")
     void testDoubleDeckWithFiveCards_AllDrawnCardsAreTheOnesProvided() {
-      final Deck deck = new TestDoubleDeck(
+      final Deck deck = new UnshuffledDeck(
           new Card(Color.HEARTS, Symbol.SEVEN),
           new Card(Color.HEARTS, Symbol.EIGHT)
       );
@@ -97,7 +97,7 @@ class RandomDeckAndItsTestDoubleTest {
     @Test
     @DisplayName("draw all cards, draw once more, throws exception")
     void emptyDeck_DrawOnceMore_ThrowsException() {
-      final Deck deck = new TestDoubleDeck(
+      final Deck deck = new UnshuffledDeck(
           new Card(Color.HEARTS, Symbol.SEVEN)
       );
       deck.drawAllCards();
@@ -107,7 +107,7 @@ class RandomDeckAndItsTestDoubleTest {
     @Test
     @DisplayName("draw all cards, draw once more, throws exception")
     void emptyDeck_PeekOnTopCard_ThrowsException() {
-      final Deck deck = new TestDoubleDeck(
+      final Deck deck = new UnshuffledDeck(
           new Card(Color.HEARTS, Symbol.SEVEN)
       );
       deck.drawAllCards();
@@ -117,7 +117,7 @@ class RandomDeckAndItsTestDoubleTest {
     @Test
     @DisplayName("draw all cards, remove top card, throws exception")
     void emptyDeck_RemoveFirstCard_ThrowsException() {
-      final Deck deck = new TestDoubleDeck(
+      final Deck deck = new UnshuffledDeck(
           new Card(Color.HEARTS, Symbol.SEVEN)
       );
       deck.drawAllCards();

@@ -9,7 +9,7 @@ import hwr.oop.poker.application.domain.Player;
 import hwr.oop.poker.application.domain.ShowDown;
 import hwr.oop.poker.application.domain.cards.CommunityCards;
 import hwr.oop.poker.application.domain.combinations.Combination;
-import hwr.oop.poker.application.domain.decks.TestDoubleDeck;
+import hwr.oop.poker.application.domain.decks.UnshuffledDeck;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ class ShowDownsBestHandsIsTheWinnerTest {
     final var converter = Converter.create();
     firstPlayer = new Player("1");
     secondPlayer = new Player("2");
-    final var deck = new TestDoubleDeck(
+    final var deck = new UnshuffledDeck(
         converter.convert("AH,TS,AC,2S")
     );
     final var players = List.of(firstPlayer, secondPlayer);

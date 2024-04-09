@@ -5,16 +5,17 @@ import hwr.oop.poker.application.domain.Deck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
-public class TestDoubleDeck implements Deck {
+public class UnshuffledDeck implements Deck {
 
   private final List<Card> cards;
 
-  public TestDoubleDeck(Card... cards) {
+  public UnshuffledDeck(Card... cards) {
     this(new ArrayList<>(Arrays.asList(cards)));
   }
 
-  public TestDoubleDeck(List<Card> cards) {
+  public UnshuffledDeck(List<Card> cards) {
     this.cards = new ArrayList<>(cards);
   }
 
@@ -41,6 +42,23 @@ public class TestDoubleDeck implements Deck {
 
   @Override
   public Deck copy() {
-    return new TestDoubleDeck(cards);
+    return new UnshuffledDeck(cards);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    UnshuffledDeck that = (UnshuffledDeck) o;
+    return Objects.equals(cards, that.cards);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(cards);
   }
 }

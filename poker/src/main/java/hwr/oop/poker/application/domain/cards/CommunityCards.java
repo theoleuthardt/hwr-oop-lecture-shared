@@ -80,9 +80,9 @@ public class CommunityCards implements CommunityCardsProvider {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CommunityCards that = (CommunityCards) o;
-    return Objects.equals(flop, that.flop) && Objects.equals(turn, that.turn)
-        && Objects.equals(river, that.river);
+    CommunityCardsProvider that = (CommunityCardsProvider) o;
+    return Objects.equals(flop(), that.flop()) && Objects.equals(turn(), that.turn())
+        && Objects.equals(river(), that.river());
   }
 
   @Override

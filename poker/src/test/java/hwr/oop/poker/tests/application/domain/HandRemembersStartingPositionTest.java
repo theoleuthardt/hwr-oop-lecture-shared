@@ -10,7 +10,7 @@ import hwr.oop.poker.application.domain.Stacks;
 import hwr.oop.poker.application.domain.Symbol;
 import hwr.oop.poker.application.domain.blinds.BlindConfiguration;
 import hwr.oop.poker.application.domain.blinds.SmallBlind;
-import hwr.oop.poker.application.domain.decks.TestDoubleDeck;
+import hwr.oop.poker.application.domain.decks.UnshuffledDeck;
 import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
@@ -108,7 +108,7 @@ class HandRemembersStartingPositionTest {
         .of(second).is(20_000)
         .of(third).is(10_000)
         .build();
-    final var deck = new TestDoubleDeck(
+    final var deck = new UnshuffledDeck(
         new Card(Color.SPADES, Symbol.ACE),
         new Card(Color.DIAMONDS, Symbol.ACE),
         new Card(Color.HEARTS, Symbol.ACE),

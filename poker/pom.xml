@@ -8,9 +8,7 @@
     <artifactId>hwr-oop-lecture-shared</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
-
   <artifactId>poker</artifactId>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!-- java -->

@@ -1,7 +1,5 @@
 package hwr.oop.poker.tests.application;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -15,7 +13,7 @@ import hwr.oop.poker.application.domain.Stacks;
 import hwr.oop.poker.application.domain.Symbol;
 import hwr.oop.poker.application.domain.blinds.BlindConfiguration;
 import hwr.oop.poker.application.domain.blinds.SmallBlind;
-import hwr.oop.poker.application.domain.decks.TestDoubleDeck;
+import hwr.oop.poker.application.domain.decks.UnshuffledDeck;
 import hwr.oop.poker.application.ports.in.GameActionUseCase;
 import hwr.oop.poker.application.ports.out.LoadHandPort;
 import hwr.oop.poker.application.ports.out.SaveHandPort;
@@ -51,26 +49,50 @@ class GameActionUseCaseTest {
     // when
     gameActionUseCase.gameAction(command);
     // then
-    verify(saveHandPortMock).saveHand(eq(handId), isNotNull());
+    final var first = new Player("1");
+    final var updatedHand = exampleHand()
+        .onCurrentRound(b -> b.with(first).bet(3));
+    verify(saveHandPortMock).saveHand(handId, updatedHand);
   }
 
   @Test
-  void continuingHand_LoadsHand_AndSavesUpdatedHand() {
+  void flopPlayed_SmallBlindChecks_LoadsHand_AndSavesUpdatedHand() {
     // given
     final var handId = new HandId("1337");
     when(loadHandPortMock.loadById(handId)).thenReturn(exampleHand());
     final var command = GameActionUseCase.newCommandBuilder()
         .handId("1337")
         .playerId("1")
-        .type("BET")
-        .toChips(3)
+        .type("CHECK")
         .build();
     // when
     gameActionUseCase.gameAction(command);
     // then
+    final var first = new Player("1");
     final var updatedHand = exampleHand()
-        .onCurrentRound(r -> r.with(new Player("1")).bet(3));
-    verify(saveHandPortMock).saveHand(eq(handId), isNotNull());
+        .onCurrentRound(b -> b.with(first).check());
+    verify(saveHandPortMock).saveHand(handId, updatedHand);
+  }
+
+  @Test
+  void flopPlayedSmallBlindBets_BigBlindCalls_LoadsHand_AndSavesUpdatedHand() {
+    // given
+    final var first = new Player("1");
+    final var handId = new HandId("1337");
+    final var fixture = exampleHand()
+        .onCurrentRound(r -> r.with(first).bet(3));
+    when(loadHandPortMock.loadById(handId)).thenReturn(fixture);
+    final var command = GameActionUseCase.newCommandBuilder()
+        .handId("1337")
+        .playerId("2")
+        .type("FOLD")
+        .build();
+    // when
+    gameActionUseCase.gameAction(command);
+    // then
+    final var second = new Player("2");
+    final var updatedHand = fixture.onCurrentRound(b -> b.with(second).fold());
+    verify(saveHandPortMock).saveHand(handId, updatedHand);
   }
 
   private Hand exampleHand() {
@@ -80,7 +102,7 @@ class GameActionUseCaseTest {
     final var players = List.of(first, second, third);
     final var stacks = Stacks.newBuilder().of(first).is(30_000).of(second).is(20_000).of(third)
         .is(10_000).build();
-    final var deck = new TestDoubleDeck(
+    final var deck = new UnshuffledDeck(
         new Card(Color.SPADES, Symbol.ACE),
         new Card(Color.DIAMONDS, Symbol.ACE),
         new Card(Color.HEARTS, Symbol.ACE),

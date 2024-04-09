@@ -17,7 +17,7 @@ import hwr.oop.poker.application.domain.cards.CommunityCardsProvider;
 import hwr.oop.poker.application.domain.cards.Flop;
 import hwr.oop.poker.application.domain.cards.River;
 import hwr.oop.poker.application.domain.cards.Turn;
-import hwr.oop.poker.application.domain.decks.TestDoubleDeck;
+import hwr.oop.poker.application.domain.decks.UnshuffledDeck;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +42,7 @@ class PlayingHandsWithTwoPlayersTest {
     cardsOnFlop = converter.convert("TC,TH,2H");
     cardsOnTurn = converter.convert("KS");
     cardsOnRiver = converter.convert("AS");
-    final Deck deck = new TestDoubleDeck(
+    final Deck deck = new UnshuffledDeck(
         new Card(Color.HEARTS, Symbol.ACE),  // p1, c1
         new Card(Color.SPADES, Symbol.TEN),
         new Card(Color.CLUBS, Symbol.ACE),  // p1, c2
