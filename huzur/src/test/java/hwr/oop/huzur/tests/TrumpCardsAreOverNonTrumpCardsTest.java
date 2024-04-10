@@ -63,15 +63,15 @@ class TrumpCardsAreOverNonTrumpCardsTest {
     final var game = new Game(Color.SPADES);
     final var cmp = game.strenghtComparator();
     ComparatorAssert.of(cmp)
-        .smallerThan("S7", "S8")
-        .smallerThan("S8", "S9")
-        .smallerThan("S9", "ST")
-        .smallerThan("ST", "SJ")
-        .smallerThan("SJ", "SQ")
-        .smallerThan("SQ", "SK")
-        .smallerThan("SK", "S3")
-        .smallerThan("S3", "S2")
-        .smallerThan("S2", "SA")
+        .weakerThan("S7", "S8")
+        .weakerThan("S8", "S9")
+        .weakerThan("S9", "ST")
+        .weakerThan("ST", "SJ")
+        .weakerThan("SJ", "SQ")
+        .weakerThan("SQ", "SK")
+        .weakerThan("SK", "S3")
+        .weakerThan("S3", "S2")
+        .weakerThan("S2", "SA")
         .run();
   }
 
@@ -80,15 +80,15 @@ class TrumpCardsAreOverNonTrumpCardsTest {
     final var game = new Game(Color.DIAMONDS);
     final var cmp = game.strenghtComparator();
     ComparatorAssert.of(cmp)
-        .smallerThan("S7", "S8")
-        .smallerThan("S8", "S9")
-        .smallerThan("S9", "ST")
-        .smallerThan("ST", "SJ")
-        .smallerThan("SJ", "SQ")
-        .smallerThan("SQ", "SK")
-        .smallerThan("SK", "S3")
-        .smallerThan("S3", "S2")
-        .smallerThan("S2", "SA")
+        .weakerThan("S7", "S8")
+        .weakerThan("S8", "S9")
+        .weakerThan("S9", "ST")
+        .weakerThan("ST", "SJ")
+        .weakerThan("SJ", "SQ")
+        .weakerThan("SQ", "SK")
+        .weakerThan("SK", "S3")
+        .weakerThan("S3", "S2")
+        .weakerThan("S2", "SA")
         .run();
   }
 
@@ -97,9 +97,9 @@ class TrumpCardsAreOverNonTrumpCardsTest {
     final var game = new Game(Color.CLUBS);
     final var comparator = game.strenghtComparator();
     ComparatorAssert.of(comparator)
-        .biggerThan("C7", "HA")
-        .biggerThan("C7", "DA")
-        .biggerThan("C7", "SA")
+        .strongerThan("C7", "HA")
+        .strongerThan("C7", "DA")
+        .strongerThan("C7", "SA")
         .run();
   }
 
@@ -110,7 +110,7 @@ class TrumpCardsAreOverNonTrumpCardsTest {
     ComparatorAssert.of(comparator)
         .notStrongerThan("SA", "D7")
         .notStrongerThan("SA", "H7")
-        .biggerThan("SA", "S7")
+        .strongerThan("SA", "S7")
         .run();
   }
 
@@ -119,9 +119,9 @@ class TrumpCardsAreOverNonTrumpCardsTest {
     final var game = new Game(Color.HEARTS);
     final var comparator = game.strenghtComparator();
     ComparatorAssert.of(comparator)
-        .smallerThan("HA", "J1")
-        .smallerThan("HA", "J2")
-        .biggerThan("J1", "J2")
+        .weakerThan("HA", "J1")
+        .weakerThan("HA", "J2")
+        .strongerThan("J1", "J2")
         .run();
   }
 
@@ -142,36 +142,36 @@ class TrumpCardsAreOverNonTrumpCardsTest {
       Objects.requireNonNull(comparator);
     }
 
-    private ComparatorAssert biggerThan(Card bigger, Card smaller) {
+    private ComparatorAssert strongerThan(Card bigger, Card smaller) {
       soft.assertThat(comparator.compare(bigger, smaller)).isPositive().isNotZero();
       soft.assertThat(comparator.compare(smaller, bigger)).isNegative().isNotZero();
       return this;
-    }
-
-    private ComparatorAssert biggerThan(String bigger, String smaller) {
-      return biggerThan(converter.convert(bigger), converter.convert(smaller));
-    }
-
-    private ComparatorAssert smallerThan(Card smaller, Card bigger) {
-      return biggerThan(bigger, smaller);
-    }
-
-    private ComparatorAssert smallerThan(String smaller, String bigger) {
-      return biggerThan(bigger, smaller);
-    }
-
-    private void run() {
-      soft.assertAll();
-    }
-
-    public ComparatorAssert notStrongerThan(String first, String second) {
-      return notStrongerThan(converter.convert(first), converter.convert(second));
     }
 
     private ComparatorAssert notStrongerThan(Card first, Card second) {
       soft.assertThat(comparator.compare(first, second)).isNotPositive();
       soft.assertThat(comparator.compare(second, first)).isNotPositive();
       return this;
+    }
+
+    private ComparatorAssert strongerThan(String bigger, String smaller) {
+      return strongerThan(converter.convert(bigger), converter.convert(smaller));
+    }
+
+    private ComparatorAssert weakerThan(Card smaller, Card bigger) {
+      return strongerThan(bigger, smaller);
+    }
+
+    private ComparatorAssert weakerThan(String smaller, String bigger) {
+      return strongerThan(bigger, smaller);
+    }
+
+    public ComparatorAssert notStrongerThan(String first, String second) {
+      return notStrongerThan(converter.convert(first), converter.convert(second));
+    }
+
+    private void run() {
+      soft.assertAll();
     }
   }
 }

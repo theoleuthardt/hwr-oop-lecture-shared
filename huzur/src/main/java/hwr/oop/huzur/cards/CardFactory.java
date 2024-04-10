@@ -13,12 +13,12 @@ public class CardFactory {
         .flatMap(this::createCard);
   }
 
+  public Stream<Card> createAllCards() {
+    return Stream.concat(createNormalCards(), Stream.of(Joker.first(), Joker.second()));
+  }
+
   private Stream<Card> createCard(Color color) {
     return Arrays.stream(Sign.values())
         .map(sign -> new NormalCard(color, sign));
-  }
-
-  public Stream<Card> createAllCards() {
-    return Stream.concat(createNormalCards(), Stream.of(Joker.first(), Joker.second()));
   }
 }
